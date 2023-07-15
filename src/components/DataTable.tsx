@@ -11,6 +11,7 @@ import {
   TableCaption,
   TableContainer,
   Input,
+  Heading,
 } from "@chakra-ui/react";
 import { Badge, Stack, Button } from "@chakra-ui/react";
 import { TripData } from "../types/types";
@@ -54,19 +55,11 @@ const DataTable = ({
     <>
       <TableContainer>
         <Table variant="simple" size="sm">
-          {/* <TableCaption>Customer Trip Data</TableCaption> */}
           <Thead>
             <Tr>
               <Th>TIMESTAMP</Th>
               <Th>PURCHASE ID</Th>
-              <Th>
-                MAIL
-                {/* <select value={sortMail} onChange={handleSortEmail}>
-                <option value="">Sort</option>
-                <option value="asc">Asc</option>
-                <option value="desc">Desc</option>
-              </select> */}
-              </Th>
+              <Th>MAIL</Th>
               <Th>
                 NAME
                 <select value={selectedOption} onChange={handleSort}>
@@ -98,8 +91,8 @@ const DataTable = ({
                             <Badge
                               colorScheme="green"
                               borderRadius="50px"
-                              paddingX="4px"
-                              paddingY="2px"
+                              paddingX="10px"
+                              paddingY="5px"
                             >
                               paid
                             </Badge>
@@ -107,8 +100,8 @@ const DataTable = ({
                             <Badge
                               colorScheme="red"
                               borderRadius="50px"
-                              paddingX="4px"
-                              paddingY="2px"
+                              paddingX="10px"
+                              paddingY="5px"
                             >
                               failed
                             </Badge>
@@ -116,8 +109,8 @@ const DataTable = ({
                             <Badge
                               colorScheme="yellow"
                               borderRadius="50px"
-                              paddingX="4px"
-                              paddingY="2px"
+                              paddingX="10px"
+                              paddingY="5px"
                             >
                               waiting
                             </Badge>
