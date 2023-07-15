@@ -1,0 +1,9 @@
+.searchContainer {
+  display: flex;
+  column-gap: 1rem;
+  width: 50%;
+  align-items: center;
+}
+.searchBar {
+  font-size: 25px;
+}
