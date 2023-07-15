@@ -4,132 +4,135 @@ import {
   Table,
   Thead,
   Tbody,
-  Tfoot,
   Tr,
   Th,
   Td,
-  TableCaption,
   TableContainer,
-  Input,
-  Heading,
+  Box,
+  Select,
 } from "@chakra-ui/react";
 import { Badge, Stack, Button } from "@chakra-ui/react";
-import { TripData } from "../types/types";
-import { IoIosArrowDropdownCircle } from "react-icons/io";
-import styles from "../styles/Data.module.css";
+import { PropsType } from "../types/types";
 import { formatTimestamp } from "../utils/formatTime";
-import { AiOutlineSearch } from "react-icons/ai";
-type Props = {
-  filterHeaders: TripData[]; // ["Timestamp", "#Purchase Id"] etc..
-  sortable: boolean;
-  captions: string;
-  rows: string[];
-  setFilterHeaders: () => void;
-};
 
 const DataTable = ({
   filterHeaders,
   sortable,
-  captions,
+  caption,
   rows,
   setFilterHeaders,
-}: Props) => {
+}: PropsType) => {
+  //   sortable = false;
   const [selectedOption, setSelectedOption] = React.useState<string>("");
+
   const handleSort = (e: React.ChangeEvent<HTMLSelectElement>): void => {
     setSelectedOption(e.target.value);
     if (sortable) {
       if (e.target.value === "asc") {
-        const ascendingOrder = filterHeaders.sort((a, b) =>
+        const ascendingOrder = [...filterHeaders].sort((a, b) =>
           a.name.localeCompare(b.name)
         );
         setFilterHeaders(ascendingOrder);
-      } else {
-        const descendingOrder = filterHeaders.sort((a, b) =>
+      } else if (e.target.value === "desc") {
+        const descendingOrder = [...filterHeaders].sort((a, b) =>
           b.name.localeCompare(a.name)
         );
         setFilterHeaders(descendingOrder);
+      } else {
+        setFilterHeaders(filterHeaders);
       }
     }
   };
+
   return (
-    <>
+    <Box>
+      {caption && <>{caption}</>}
+      {sortable && (
+        <Box mt={4} width="20%">
+          <Select value={selectedOption} onChange={handleSort} size="sm">
+            <option value="">Sort By</option>
+            <option value="asc">Ascending</option>
+            <option value="desc">Descending</option>
+          </Select>
+        </Box>
+      )}
+
       <TableContainer>
         <Table variant="simple" size="sm">
           <Thead>
             <Tr>
-              <Th>TIMESTAMP</Th>
+              {rows.map((header, idx) => (
+                <Th key={idx}>{header}</Th>
+              ))}
+              {/* <Th>TIMESTAMP</Th>
               <Th>PURCHASE ID</Th>
               <Th>MAIL</Th>
-              <Th>
-                NAME
-                <select value={selectedOption} onChange={handleSort}>
-                  <option value="">Sort</option>
-                  <option value="asc">Asc</option>
-                  <option value="desc">Desc</option>
-                </select>
-                {/* {getSortIcon()} */}
-              </Th>
+              <Th>NAME</Th>
               <Th>SOURCE</Th>
               <Th>STATUS</Th>
-              <Th>SELECT</Th>
+              <Th>SELECT</Th> */}
             </Tr>
           </Thead>
           <Tbody>
-            {filterHeaders.length === 0
-              ? "No match Found"
-              : filterHeaders.map((elem, idx) => {
-                  return (
-                    <Tr key={idx}>
-                      <Td>{formatTimestamp(elem.timestamp)}</Td>
-                      <Td isNumeric>{elem.purchase_id}</Td>
-                      <Td>{elem.mail}</Td>
-                      <Td>{elem.name}</Td>
-                      <Td>{elem.source}</Td>
-                      <Td>
-                        <Stack direction="row">
-                          {elem?.status === "paid" ? (
-                            <Badge
-                              colorScheme="green"
-                              borderRadius="50px"
-                              paddingX="10px"
-                              paddingY="5px"
-                            >
-                              paid
-                            </Badge>
-                          ) : elem?.status === "failed" ? (
-                            <Badge
-                              colorScheme="red"
-                              borderRadius="50px"
-                              paddingX="10px"
-                              paddingY="5px"
-                            >
-                              failed
-                            </Badge>
-                          ) : (
-                            <Badge
-                              colorScheme="yellow"
-                              borderRadius="50px"
-                              paddingX="10px"
-                              paddingY="5px"
-                            >
-                              waiting
-                            </Badge>
-                          )}
-                        </Stack>
-                      </Td>
-                      <Td>
-                        <Button colorScheme="gray" size="md">
-                          {elem.select.charAt(0).toUpperCase() +
-                            elem.select.slice(1)}
-                        </Button>
-                      </Td>
-                    </Tr>
-                  );
-                })}
+            {filterHeaders.length === 0 ? (
+              <Tr>
+                <Td colSpan={filterHeaders.length}>No Match Found</Td>
+              </Tr>
+            ) : (
+              filterHeaders.map((elem, idx) => {
+                return (
+                  <Tr key={idx}>
+                    <Td>{formatTimestamp(elem.timestamp)}</Td>
+                    <Td isNumeric>{elem.purchase_id}</Td>
+                    <Td>{elem.mail}</Td>
+                    <Td>{elem.name}</Td>
+                    <Td>{elem.source}</Td>
+                    <Td>
+                      <Stack direction="row">
+                        {elem?.status === "paid" ? (
+                          <Badge
+                            colorScheme="green"
+                            borderRadius="50px"
+                            paddingX="10px"
+                            paddingY="5px"
+                          >
+                            paid
+                          </Badge>
+                        ) : elem?.status === "failed" ? (
+                          <Badge
+                            colorScheme="red"
+                            borderRadius="50px"
+                            paddingX="10px"
+                            paddingY="5px"
+                          >
+                            failed
+                          </Badge>
+                        ) : (
+                          <Badge
+                            colorScheme="yellow"
+                            borderRadius="50px"
+                            paddingX="10px"
+                            paddingY="5px"
+                          >
+                            waiting
+                          </Badge>
+                        )}
+                      </Stack>
+                    </Td>
+                    <Td>
+                      <Button colorScheme="gray" size="sm">
+                        {elem.select.charAt(0).toUpperCase() +
+                          elem.select.slice(1)}
+                      </Button>
+                    </Td>
+                  </Tr>
+                );
+              })
+            )}
           </Tbody>
         </Table>
       </TableContainer>
-    </>
+    </Box>
   );
 };
 

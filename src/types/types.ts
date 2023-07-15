@@ -7,3 +7,10 @@ export interface TripData {
   status: string;
   select: string;
 }
+export interface PropsType {
+  filterHeaders: TripData[];
+  sortable: boolean;
+  caption: string;
+  rows: string[];
+  setFilterHeaders: () => void;
+}

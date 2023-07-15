@@ -5,18 +5,16 @@ import tripData from "../utils/tripData.json";
 import { rows } from "../utils/rows";
 import Pagination from "@/components/Pagination";
 import style from "./page.module.css";
-import { Heading, Input, Select } from "@chakra-ui/react";
+import { Input, Select } from "@chakra-ui/react";
 import { AiOutlineSearch } from "react-icons/ai";
-import styles from "../styles/Data.module.css";
 import { TripData } from "@/types/types";
-import { fetchData } from "@/api/fetchTripData";
 
 const Home: React.FC = () => {
-  console.log(fetchData());
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [searchName, setSearchName] = React.useState<string>("");
   const [status, setStatus] = useState<string>("");
   const [filterHeaders, setFilterHeaders] = React.useState(tripData);
+
   const PAGE_SIZE = 10;
   const filterData = (filterHeaders: TripData[], searchName: any) => {
     const filterName = filterHeaders.filter((elem) =>
@@ -61,7 +59,7 @@ const Home: React.FC = () => {
     setCurrentPage(page);
   };
   const dataTableProps: any = {
-    captions: "Bookings",
+    caption: "Bookings",
     filterHeaders: filterHeaders.slice(
       (currentPage - 1) * PAGE_SIZE,
       currentPage * PAGE_SIZE
@@ -72,12 +70,9 @@ const Home: React.FC = () => {
   };
   return (
     <main className={style.mainContainer}>
-      <div className={styles.filterWrapper}>
-        <Heading as="h2" size="md">
-          {dataTableProps.captions}
-        </Heading>
-        <div className={styles.searchContainer}>
-          <AiOutlineSearch className={styles.searchBar} />
+      <div className={style.filterWrapper}>
+        <div className={style.searchContainer}>
+          <AiOutlineSearch className={style.searchBar} />
           <Input
             placeholder="Search by name"
             size="sm"
@@ -85,11 +80,8 @@ const Home: React.FC = () => {
             onChange={(e) => setSearchName(e.target.value)}
             type="text"
           />
-          {/* <Button colorScheme="teal" size="sm" onClick={handleSearch}>
-          Button
-        </Button> */}
         </div>
-        <div className={styles.searchContainer}>
+        <div className={style.searchContainer}>
           <Select
             placeholder="Select Status"
             onChange={handleSortStatus}
@@ -105,7 +97,7 @@ const Home: React.FC = () => {
       <DataTable {...dataTableProps} />
       <Pagination
         currentPage={currentPage}
-        totalPages={Math.ceil(filterHeaders.length / PAGE_SIZE)} // Replace with the actual total number of pages
+        totalPages={Math.ceil(filterHeaders.length / PAGE_SIZE)}
         onPageChange={handlePageChange}
       />
     </main>
