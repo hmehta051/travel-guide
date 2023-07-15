@@ -48,7 +48,7 @@ const DataTable = ({
     <Box>
       {caption && <>{caption}</>}
       {sortable && (
-        <Box mt={4} width="20%">
+        <Box mt={2} width="20%">
           <Select value={selectedOption} onChange={handleSort} size="sm">
             <option value="">Sort By</option>
             <option value="asc">Ascending</option>
