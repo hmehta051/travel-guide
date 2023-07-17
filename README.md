@@ -48,6 +48,12 @@ This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-opti
 4. Filter Using Status
 ```
 
+## API
+
+```
+https://itchy-pullover-newt.cyclic.app/tripData
+```
+
 ## Deploy on Vercel
 
 [Coming Soon](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme)
