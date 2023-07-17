@@ -8,9 +8,14 @@ export interface TripData {
   select: string;
 }
 export interface PropsType {
-  filterHeaders: TripData[];
+  headers: TripData[];
   sortable: boolean;
   caption: string;
   rows: string[];
-  setFilterHeaders: () => void;
+}
+
+export interface PaginationProps {
+  currentPage: number;
+  totalPages: number;
+  onPageChange: (page: any) => void;
 }
