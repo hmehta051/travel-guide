@@ -1,6 +1,6 @@
 "use client";
 import React from "react";
-import styles from "../styles/pagination.module.css";
+import styles from "../styles/Pagination.module.css";
 import { PaginationProps } from "@/types/types";
 
 const Pagination: React.FC<PaginationProps> = ({
